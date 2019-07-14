@@ -1,0 +1,13 @@
+查询test表按group_id分组取sort_id前100个
+
+
+SELECT id AS '原数据ID',group_id AS '分组ID',sort_id AS '排序条件',num AS '排名'
+FROM 
+    (SELECT  @row_number := CASE WHEN  @customer_no = group_id  THEN  @row_number + 1  ELSE  1 END   AS  num /*如果同group_id那么排名加1,否则更新为1*/
+    ,@customer_no := group_id  AS  group_id /*重新加载group_id*/
+    ,id , sort_id /*原有数据*/
+ FROM  test,( SELECT  @customer_no := 0,@row_number := 0)  AS  t
+ ORDER BY group_id ,sort_id DESC ,id)a 
+WHERE num<=100
+
+https://blog.51cto.com/mydbs/2159794?source=dra 
