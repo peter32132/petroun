@@ -1,0 +1,28 @@
+1. Regular Expression 正则表达式
+正则表达式常简称为regex。一个regular expression常被成为一种pattern（模式、模板？），用来描述和匹配一系列符合某种规则的字符串。
+以下是一些基本用法。
+
+1.1 Quantifier 数量限定符
+注意区别通配符‘*’
+
+Char	Description	Example
+?	表示前面的token出现0或1次	app?le 可匹配 aple(0次)、apple（1次）
++	表示前面的token出现1或n次	go+gle 可匹配 gogle（1次）、google、gooogle……（n次)
+*	表示前面的token出现0或n次	ali(ba)* 可匹配 ali（0次）、aliba（1次）、alibaba……（n次）
+{n}	表示前面的token固定出现n次	o{2} 可匹配zoo、moon、book……但是Bob不行
+{n,}	表示前面的token至少出现n次	{1,}相当于+；{0,}相当于*
+{m,n}	表示前面的token出现m～n次	As above.
+Note: 默认为greedy matching，匹配最长的字符串；当?添加在其他任意quantifier后面时，表示lazy matching，匹配最短的字符串。
+e.g.
+h.+l matches 'hell' in 'hello', greedy.
+h.+?l matches 'hel' in 'hello', lazy.
+
+1.2 其他常用符号
+Char	Description	Comments
+^	字符串starting position	^a 可匹配’alias’，line-based tools中表示每一行的开头
+$	字符串的ending position	n$ 可匹配’qq.cn’，line-based tools中表示每一行的结尾
+()	grouping	ali(ba)*中‘ba’是一个tokon
+.	除了\n(new-line)之外的任意单个字符	常配合quantifier.+表示1-n个任意字符
+\	转义符	转右边特殊字符为它本身\^=^；转右边普通字符为特殊意义\n=newline；Highest priority
+| Boolean OR gr(e|a)y 匹配 ‘grey’和’gray’
+注：由于hexo对markdown的解析还不够完善，此处vertical bar无法成功转义，总是打乱表格，故补充在引用里。
